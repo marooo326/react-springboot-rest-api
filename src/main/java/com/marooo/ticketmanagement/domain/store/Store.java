@@ -1,7 +1,10 @@
 package com.marooo.ticketmanagement.domain.store;
 
+import com.marooo.ticketmanagement.domain.ticketTemplate.TicketTemplate;
+
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "store")
@@ -18,4 +21,7 @@ public class Store {
 
     @Column
     private LocalDate createdAt;
+
+    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
+    private List<TicketTemplate> tickets;
 }

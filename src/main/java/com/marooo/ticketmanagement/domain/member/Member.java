@@ -1,6 +1,6 @@
 package com.marooo.ticketmanagement.domain.member;
 
-import com.marooo.ticketmanagement.domain.ticketAssginment.TicketAssignment;
+import com.marooo.ticketmanagement.domain.ticket.Ticket;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -27,5 +27,5 @@ public class Member {
     private LocalDate createdAt;
 
     @OneToMany(mappedBy = "member")
-    private List<TicketAssignment> tickets;
+    private List<Ticket> tickets;
 }

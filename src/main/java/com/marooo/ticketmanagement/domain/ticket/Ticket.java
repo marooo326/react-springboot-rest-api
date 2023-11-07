@@ -6,7 +6,7 @@ import com.marooo.ticketmanagement.domain.ticketTemplate.TicketTemplate;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "ticket_assignment")
+@Table(name = "ticket")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "DTYPE", discriminatorType = DiscriminatorType.STRING)
 public abstract class Ticket {
@@ -19,6 +19,6 @@ public abstract class Ticket {
     private Member member;
 
     @ManyToOne
-    @JoinColumn(name = "ticket_id")
-    private TicketTemplate ticket;
+    @JoinColumn(name = "template_id")
+    private TicketTemplate template;
 }
