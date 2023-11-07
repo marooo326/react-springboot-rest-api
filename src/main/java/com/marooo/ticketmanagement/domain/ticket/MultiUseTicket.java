@@ -6,5 +6,5 @@ import javax.persistence.Entity;
 @Entity
 public class MultiUseTicket extends Ticket {
     @Column
-    private Integer useLimit;
+    private Integer useCount;
 }

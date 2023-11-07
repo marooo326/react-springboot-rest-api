@@ -1,10 +1,12 @@
 package com.marooo.ticketmanagement.domain.ticket;
 
+import com.marooo.ticketmanagement.domain.member.Member;
+import com.marooo.ticketmanagement.domain.ticketTemplate.TicketTemplate;
+
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @Entity
-@Table(name = "ticket")
+@Table(name = "ticket_assignment")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "DTYPE", discriminatorType = DiscriminatorType.STRING)
 public abstract class Ticket {
@@ -12,12 +14,11 @@ public abstract class Ticket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String name;
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
 
-    @Column
-    private String description;
-
-    @Column(nullable = false)
-    private LocalDate createdAt;
+    @ManyToOne
+    @JoinColumn(name = "ticket_id")
+    private TicketTemplate ticket;
 }
