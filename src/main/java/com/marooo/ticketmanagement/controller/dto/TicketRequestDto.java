@@ -1,13 +1,14 @@
 package com.marooo.ticketmanagement.controller.dto;
 
 import com.marooo.ticketmanagement.domain.ticket.TicketType;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 
 public class TicketRequestDto {
 
     @Builder
     @Getter
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    @AllArgsConstructor(access = AccessLevel.PRIVATE)
     public static class CreateDto {
         private String name;
         private String description;

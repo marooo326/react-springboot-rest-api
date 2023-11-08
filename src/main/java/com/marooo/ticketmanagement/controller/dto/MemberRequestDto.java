@@ -1,12 +1,13 @@
 package com.marooo.ticketmanagement.controller.dto;
 
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 
 public class MemberRequestDto {
 
     @Builder
     @Getter
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    @AllArgsConstructor(access = AccessLevel.PRIVATE)
     public static class CreateDto {
         private String name;
         private String phoneNumber;
