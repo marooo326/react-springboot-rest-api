@@ -3,7 +3,10 @@ package com.marooo.ticketmanagement.converter;
 import com.marooo.ticketmanagement.controller.dto.MemberRequestDto;
 import com.marooo.ticketmanagement.controller.dto.MemberResponseDto;
 import com.marooo.ticketmanagement.domain.member.Member;
+import com.marooo.ticketmanagement.domain.member.MemberState;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDateTime;
 
 @Component
 public class MemberConverter {
@@ -12,6 +15,8 @@ public class MemberConverter {
         return Member.builder()
                 .name(createDto.getName())
                 .phoneNumber(createDto.getPhoneNumber())
+                .createdAt(LocalDateTime.now())
+                .status(MemberState.ACTIVE)
                 .build();
     }
 

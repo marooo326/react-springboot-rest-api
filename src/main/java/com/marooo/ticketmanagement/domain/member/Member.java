@@ -26,10 +26,10 @@ public class Member {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private MemberState status = MemberState.ACTIVE;
+    private MemberState status;
 
     @Column(nullable = false)
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "member")
     private List<MemberTicket> memberTickets;
