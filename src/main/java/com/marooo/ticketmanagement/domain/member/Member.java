@@ -1,6 +1,7 @@
 package com.marooo.ticketmanagement.domain.member;
 
 import com.marooo.ticketmanagement.domain.ticket.Ticket;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -8,6 +9,10 @@ import java.util.List;
 
 @Entity
 @Table(name = "member")
+@Builder
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +29,7 @@ public class Member {
     private MemberStatus status = MemberStatus.ACTIVE;
 
     @Column(nullable = false)
-    private LocalDate createdAt;
+    private LocalDate createdAt = LocalDate.now();
 
     @OneToMany(mappedBy = "member")
     private List<Ticket> tickets;

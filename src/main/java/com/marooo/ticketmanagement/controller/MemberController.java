@@ -1,7 +1,7 @@
 package com.marooo.ticketmanagement.controller;
 
-import com.marooo.ticketmanagement.controller.dto.MemberRequest;
-import com.marooo.ticketmanagement.controller.dto.MemberResponse;
+import com.marooo.ticketmanagement.controller.dto.MemberRequestDto;
+import com.marooo.ticketmanagement.controller.dto.MemberResponseDto;
 import com.marooo.ticketmanagement.service.MemberService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -20,26 +20,26 @@ public class MemberController {
     private final MemberService memberService;
 
     @GetMapping
-    public ResponseEntity<List<MemberResponse.Info>> getAllMembers() {
+    public ResponseEntity<List<MemberResponseDto.DetailDto>> getAllMembers() {
         return ResponseEntity.ok(memberService.getAllMembers());
     }
 
     @GetMapping("/{memberId}")
-    public ResponseEntity<MemberResponse.Info> getMember(@PathVariable @NonNull Long memberId) {
+    public ResponseEntity<MemberResponseDto.DetailDto> getMember(@PathVariable @NonNull Long memberId) {
         return ResponseEntity.ok(memberService.getMemberById(memberId));
     }
 
     @PostMapping
-    public ResponseEntity<MemberResponse.Info> createMember(@RequestBody @NonNull MemberRequest.Create member, UriComponentsBuilder uriComponentsBuilder) {
-        MemberResponse.Info memberInfo = memberService.createMember(member);
+    public ResponseEntity<MemberResponseDto.DetailDto> createMember(@RequestBody @NonNull MemberRequestDto.CreateDto member, UriComponentsBuilder uriComponentsBuilder) {
+        MemberResponseDto.DetailDto memberDetail = memberService.createMember(member);
         URI location = uriComponentsBuilder.path(BASE_URI + "/{id}")
-                .buildAndExpand(memberInfo.getId())
+                .buildAndExpand(memberDetail.getId())
                 .toUri();
-        return ResponseEntity.created(location).body(memberInfo);
+        return ResponseEntity.created(location).body(memberDetail);
     }
 
     @DeleteMapping("/{memberId}")
-    public ResponseEntity<MemberResponse.Info> deleteMember(@PathVariable @NonNull Long memberId) {
+    public ResponseEntity<MemberResponseDto.DetailDto> deleteMember(@PathVariable @NonNull Long memberId) {
         memberService.deleteMember(memberId);
         return ResponseEntity.noContent().build();
     }

@@ -3,11 +3,11 @@ package com.marooo.ticketmanagement.controller.dto;
 import lombok.Builder;
 import lombok.Getter;
 
-public class MemberRequest {
+public class MemberRequestDto {
 
     @Builder
     @Getter
-    public static class Create {
+    public static class CreateDto {
         private String name;
         private String phoneNumber;
     }

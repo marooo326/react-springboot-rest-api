@@ -6,11 +6,11 @@ import lombok.Getter;
 
 import java.time.LocalDate;
 
-public class MemberResponse {
+public class MemberResponseDto {
 
     @Builder
     @Getter
-    public static class Info {
+    public static class DetailDto {
         private Long id;
         private String name;
         private String phoneNumber;
