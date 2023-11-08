@@ -4,7 +4,7 @@ import com.marooo.ticketmanagement.domain.ticket.Ticket;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -29,7 +29,7 @@ public class Member {
     private MemberStatus status = MemberStatus.ACTIVE;
 
     @Column(nullable = false)
-    private LocalDate createdAt = LocalDate.now();
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     @OneToMany(mappedBy = "member")
     private List<Ticket> tickets;

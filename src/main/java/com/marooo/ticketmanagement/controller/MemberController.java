@@ -30,8 +30,8 @@ public class MemberController {
     }
 
     @PostMapping
-    public ResponseEntity<MemberResponseDto.DetailDto> createMember(@RequestBody @NonNull MemberRequestDto.CreateDto member, UriComponentsBuilder uriComponentsBuilder) {
-        MemberResponseDto.DetailDto memberDetail = memberService.createMember(member);
+    public ResponseEntity<MemberResponseDto.DetailDto> createMember(@RequestBody @NonNull MemberRequestDto.CreateDto createDto, UriComponentsBuilder uriComponentsBuilder) {
+        MemberResponseDto.DetailDto memberDetail = memberService.createMember(createDto);
         URI location = uriComponentsBuilder.path(BASE_URI + "/{id}")
                 .buildAndExpand(memberDetail.getId())
                 .toUri();
@@ -39,7 +39,7 @@ public class MemberController {
     }
 
     @DeleteMapping("/{memberId}")
-    public ResponseEntity<MemberResponseDto.DetailDto> deleteMember(@PathVariable @NonNull Long memberId) {
+    public ResponseEntity<Void> deleteMember(@PathVariable @NonNull Long memberId) {
         memberService.deleteMember(memberId);
         return ResponseEntity.noContent().build();
     }

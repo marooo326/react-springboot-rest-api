@@ -4,7 +4,7 @@ import com.marooo.ticketmanagement.domain.member.MemberStatus;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class MemberResponseDto {
 
@@ -15,6 +15,6 @@ public class MemberResponseDto {
         private String name;
         private String phoneNumber;
         private MemberStatus status;
-        private LocalDate createdAt;
+        private LocalDateTime createdAt;
     }
 }

@@ -32,7 +32,7 @@ public class MemberService {
 
     @Transactional(readOnly = false)
     public MemberResponseDto.DetailDto createMember(MemberRequestDto.CreateDto createDto) {
-        if (memberRepository.existsByName(createDto.getName()))
+        if (memberRepository.existsByPhoneNumber(createDto.getPhoneNumber()))
             throw new IllegalArgumentException("Member already exists");
         final Member member = memberRepository.save(MemberConverter.toMember(createDto));
         return MemberConverter.toDetailDto(member);
