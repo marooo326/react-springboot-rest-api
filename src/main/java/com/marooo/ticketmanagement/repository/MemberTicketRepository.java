@@ -1,9 +1,9 @@
 package com.marooo.ticketmanagement.repository;
 
-import com.marooo.ticketmanagement.domain.ticketTemplate.TicketTemplate;
+import com.marooo.ticketmanagement.domain.memberTicket.MemberTicket;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TicketTemplateRepository extends JpaRepository<TicketTemplate, Long> {
+public interface MemberTicketRepository extends JpaRepository<MemberTicket, Long> {
 }

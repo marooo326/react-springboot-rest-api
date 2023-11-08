@@ -12,7 +12,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 
-@RestController("/v1/members")
+@RestController
+@RequestMapping("/v1/members")
 @RequiredArgsConstructor
 public class MemberController {
     private static final String BASE_URI = "/v1/members";
@@ -25,12 +26,13 @@ public class MemberController {
     }
 
     @GetMapping("/{memberId}")
-    public ResponseEntity<MemberResponseDto.DetailDto> getMember(@PathVariable @NonNull Long memberId) {
+    public ResponseEntity<MemberResponseDto.DetailDto> getMember(@PathVariable Long memberId) {
         return ResponseEntity.ok(memberService.getMemberById(memberId));
     }
 
     @PostMapping
-    public ResponseEntity<MemberResponseDto.DetailDto> createMember(@RequestBody @NonNull MemberRequestDto.CreateDto createDto, UriComponentsBuilder uriComponentsBuilder) {
+    public ResponseEntity<MemberResponseDto.DetailDto> createMember(@RequestBody @NonNull MemberRequestDto.CreateDto createDto,
+                                                                    UriComponentsBuilder uriComponentsBuilder) {
         MemberResponseDto.DetailDto memberDetail = memberService.createMember(createDto);
         URI location = uriComponentsBuilder.path(BASE_URI + "/{id}")
                 .buildAndExpand(memberDetail.getId())
@@ -39,7 +41,7 @@ public class MemberController {
     }
 
     @DeleteMapping("/{memberId}")
-    public ResponseEntity<Void> deleteMember(@PathVariable @NonNull Long memberId) {
+    public ResponseEntity<Void> deleteMember(@PathVariable Long memberId) {
         memberService.deleteMember(memberId);
         return ResponseEntity.noContent().build();
     }

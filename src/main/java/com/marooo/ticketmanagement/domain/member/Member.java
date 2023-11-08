@@ -1,6 +1,6 @@
 package com.marooo.ticketmanagement.domain.member;
 
-import com.marooo.ticketmanagement.domain.ticket.Ticket;
+import com.marooo.ticketmanagement.domain.memberTicket.MemberTicket;
 import lombok.*;
 
 import javax.persistence.*;
@@ -26,11 +26,11 @@ public class Member {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private MemberStatus status = MemberStatus.ACTIVE;
+    private MemberState status = MemberState.ACTIVE;
 
     @Column(nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @OneToMany(mappedBy = "member")
-    private List<Ticket> tickets;
+    private List<MemberTicket> memberTickets;
 }

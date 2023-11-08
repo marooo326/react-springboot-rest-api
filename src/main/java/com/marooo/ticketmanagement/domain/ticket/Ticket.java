@@ -1,24 +1,46 @@
 package com.marooo.ticketmanagement.domain.ticket;
 
-import com.marooo.ticketmanagement.domain.member.Member;
-import com.marooo.ticketmanagement.domain.ticketTemplate.TicketTemplate;
+import com.marooo.ticketmanagement.domain.memberTicket.MemberTicket;
+import com.marooo.ticketmanagement.domain.store.Store;
+import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "ticket")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "DTYPE", discriminatorType = DiscriminatorType.STRING)
-public abstract class Ticket {
+@Getter
+@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "member_id")
-    private Member member;
+    @Column(nullable = false)
+    private String name;
+
+    @Column
+    private String description;
+
+    @Column
+    private Integer useLimit;
+
+    @Column
+    private Integer validDays;
+
+    @Column(nullable = false)
+    private TicketType ticketType;
+
+    @Column(nullable = false)
+    private LocalDate createdAt;
 
     @ManyToOne
-    @JoinColumn(name = "template_id")
-    private TicketTemplate template;
+    @JoinColumn(name = "store_id", nullable = false)
+    private Store store;
+
+    @OneToMany(mappedBy = "ticket", cascade = CascadeType.ALL)
+    private List<MemberTicket> memberTickets;
 }

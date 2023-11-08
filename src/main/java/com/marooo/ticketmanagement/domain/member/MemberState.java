@@ -1,6 +1,6 @@
 package com.marooo.ticketmanagement.domain.member;
 
-public enum MemberStatus {
+public enum MemberState {
     ACTIVE,
     INACTIVE,
     DELETED

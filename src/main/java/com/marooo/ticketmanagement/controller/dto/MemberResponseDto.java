@@ -1,6 +1,6 @@
 package com.marooo.ticketmanagement.controller.dto;
 
-import com.marooo.ticketmanagement.domain.member.MemberStatus;
+import com.marooo.ticketmanagement.domain.member.MemberState;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -14,7 +14,7 @@ public class MemberResponseDto {
         private Long id;
         private String name;
         private String phoneNumber;
-        private MemberStatus status;
+        private MemberState status;
         private LocalDateTime createdAt;
     }
 }
