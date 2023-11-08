@@ -7,13 +7,13 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class MemberConverter {
+
     public static Member toMember(MemberRequestDto.CreateDto createDto) {
         return Member.builder()
                 .name(createDto.getName())
                 .phoneNumber(createDto.getPhoneNumber())
                 .build();
     }
-
 
     public static MemberResponseDto.DetailDto toDetailDto(Member member) {
         return MemberResponseDto.DetailDto.builder()

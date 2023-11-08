@@ -5,7 +5,7 @@ import com.marooo.ticketmanagement.domain.store.Store;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -35,7 +35,7 @@ public class Ticket {
     private TicketType ticketType;
 
     @Column(nullable = false)
-    private LocalDate createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     @ManyToOne
     @JoinColumn(name = "store_id", nullable = false)

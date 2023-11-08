@@ -1,6 +1,6 @@
 package com.marooo.ticketmanagement.domain.store;
 
-import com.marooo.ticketmanagement.domain.ticketTemplate.TicketTemplate;
+import com.marooo.ticketmanagement.domain.ticket.Ticket;
 import lombok.*;
 
 import javax.persistence.*;
@@ -31,5 +31,5 @@ public class Store {
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
-    private List<TicketTemplate> tickets;
+    private List<Ticket> tickets;
 }

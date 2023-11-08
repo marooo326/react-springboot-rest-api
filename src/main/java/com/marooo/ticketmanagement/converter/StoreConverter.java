@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class StoreConverter {
+    
     public static Store toStore(StoreRequestDto.CreateDto createDto) {
         return Store.builder()
                 .name(createDto.getName())
