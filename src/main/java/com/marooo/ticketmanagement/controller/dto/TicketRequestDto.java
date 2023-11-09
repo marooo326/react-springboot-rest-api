@@ -15,6 +15,5 @@ public class TicketRequestDto {
         private Integer useLimit;
         private Integer validDays;
         private TicketType ticketType;
-        private Long storeId;
     }
 }

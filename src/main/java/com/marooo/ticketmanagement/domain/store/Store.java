@@ -28,7 +28,7 @@ public class Store {
     private String description;
 
     @Column
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
     private List<Ticket> tickets;

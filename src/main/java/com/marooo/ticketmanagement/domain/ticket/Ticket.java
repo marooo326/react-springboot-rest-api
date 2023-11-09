@@ -2,7 +2,11 @@ package com.marooo.ticketmanagement.domain.ticket;
 
 import com.marooo.ticketmanagement.domain.memberTicket.MemberTicket;
 import com.marooo.ticketmanagement.domain.store.Store;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -11,10 +15,12 @@ import java.util.List;
 @Entity
 @Table(name = "ticket")
 @Getter
-@Builder
+@SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class Ticket {
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "DTYPE")
+public abstract class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,17 +31,8 @@ public class Ticket {
     @Column
     private String description;
 
-    @Column
-    private Integer useLimit;
-
-    @Column
-    private Integer validDays;
-
     @Column(nullable = false)
-    private TicketType ticketType;
-
-    @Column(nullable = false)
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime createdAt;
 
     @ManyToOne
     @JoinColumn(name = "store_id", nullable = false)
@@ -43,4 +40,6 @@ public class Ticket {
 
     @OneToMany(mappedBy = "ticket", cascade = CascadeType.ALL)
     private List<MemberTicket> memberTickets;
+
+    public abstract TicketType getTicketType();
 }

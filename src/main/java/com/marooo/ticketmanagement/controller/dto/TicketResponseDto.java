@@ -14,6 +14,7 @@ public class TicketResponseDto {
         private Long id;
         private String name;
         private String description;
+        private TicketType ticketType;
     }
 
     @Builder

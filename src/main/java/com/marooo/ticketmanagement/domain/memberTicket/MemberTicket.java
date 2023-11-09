@@ -1,37 +1,30 @@
 package com.marooo.ticketmanagement.domain.memberTicket;
 
 import com.marooo.ticketmanagement.domain.member.Member;
-import com.marooo.ticketmanagement.domain.ticket.Ticket;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @Entity
 @Table(name = "member_ticket")
 @Getter
-@Builder
+@SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class MemberTicket {
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "DTYPE")
+public abstract class MemberTicket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column
-    private Integer useCount;
-
-    @Column
-    private LocalDate startDate;
-
-    @Column(nullable = false)
-    private MemberTicketState state;
-
+    
     @ManyToOne
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "member_id", nullable = false)
     private Member member;
 
-    @ManyToOne
-    @JoinColumn(name = "ticket_id")
-    private Ticket ticket;
+    public abstract void updateTicketState();
 }

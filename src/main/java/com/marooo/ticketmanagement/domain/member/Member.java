@@ -24,8 +24,8 @@ public class Member {
     @Column(nullable = false, unique = true)
     private String phoneNumber;
 
-    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private MemberState status;
 
     @Column(nullable = false)
