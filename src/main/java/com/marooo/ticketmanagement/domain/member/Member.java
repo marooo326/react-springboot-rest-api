@@ -1,6 +1,6 @@
 package com.marooo.ticketmanagement.domain.member;
 
-import com.marooo.ticketmanagement.domain.memberTicket.MemberTicket;
+import com.marooo.ticketmanagement.domain.mapping.memberTicket.MemberTicket;
 import lombok.*;
 
 import javax.persistence.*;

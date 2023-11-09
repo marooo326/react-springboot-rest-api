@@ -1,6 +1,6 @@
 package com.marooo.ticketmanagement.repository;
 
-import com.marooo.ticketmanagement.domain.memberTicket.MemberTicket;
+import com.marooo.ticketmanagement.domain.mapping.memberTicket.MemberTicket;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

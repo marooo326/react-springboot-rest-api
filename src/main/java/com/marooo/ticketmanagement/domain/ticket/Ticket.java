@@ -1,6 +1,6 @@
 package com.marooo.ticketmanagement.domain.ticket;
 
-import com.marooo.ticketmanagement.domain.memberTicket.MemberTicket;
+import com.marooo.ticketmanagement.domain.mapping.memberTicket.MemberTicket;
 import com.marooo.ticketmanagement.domain.store.Store;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

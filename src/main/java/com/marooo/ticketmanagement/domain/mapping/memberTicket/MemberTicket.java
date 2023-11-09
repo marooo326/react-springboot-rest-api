@@ -1,6 +1,7 @@
-package com.marooo.ticketmanagement.domain.memberTicket;
+package com.marooo.ticketmanagement.domain.mapping.memberTicket;
 
 import com.marooo.ticketmanagement.domain.member.Member;
+import com.marooo.ticketmanagement.domain.ticket.Ticket;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,7 +22,11 @@ public abstract class MemberTicket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
+    @ManyToOne
+    @JoinColumn(name = "ticket_id", nullable = false)
+    private Ticket ticket;
+
     @ManyToOne
     @JoinColumn(name = "member_id", nullable = false)
     private Member member;
