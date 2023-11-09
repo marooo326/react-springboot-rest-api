@@ -5,14 +5,19 @@ import com.marooo.ticketmanagement.controller.dto.StoreResponseDto;
 import com.marooo.ticketmanagement.domain.store.Store;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+
 @Component
 public class StoreConverter {
-    
+
     public static Store toStore(StoreRequestDto.CreateDto createDto) {
         return Store.builder()
                 .name(createDto.getName())
                 .phoneNumber(createDto.getPhoneNumber())
                 .description(createDto.getDescription())
+                .createdAt(LocalDateTime.now())
+                .tickets(new ArrayList<>())
                 .build();
     }
 

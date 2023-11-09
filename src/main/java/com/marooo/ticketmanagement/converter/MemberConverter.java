@@ -7,6 +7,7 @@ import com.marooo.ticketmanagement.domain.member.MemberState;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 @Component
 public class MemberConverter {
@@ -17,6 +18,7 @@ public class MemberConverter {
                 .phoneNumber(createDto.getPhoneNumber())
                 .createdAt(LocalDateTime.now())
                 .status(MemberState.ACTIVE)
+                .memberTickets(new ArrayList<>())
                 .build();
     }
 
