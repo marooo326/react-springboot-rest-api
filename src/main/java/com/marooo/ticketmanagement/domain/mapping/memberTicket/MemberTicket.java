@@ -22,6 +22,9 @@ public abstract class MemberTicket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
+    @Column(nullable = false)
+    protected MemberTicketState state;
 
     @ManyToOne
     @JoinColumn(name = "ticket_id", nullable = false)

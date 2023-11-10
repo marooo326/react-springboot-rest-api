@@ -32,16 +32,24 @@ public class MemberService {
 
     @Transactional(readOnly = false)
     public MemberResponseDto.DetailDto createMember(MemberRequestDto.CreateDto createDto) {
-        if (memberRepository.existsByPhoneNumber(createDto.getPhoneNumber()))
-            throw new IllegalArgumentException("Member already exists");
+        checkNotExitsByPhoneNumber(createDto.getPhoneNumber());
         final Member member = memberRepository.save(MemberConverter.toMember(createDto));
         return MemberConverter.toDetailDto(member);
     }
 
     @Transactional(readOnly = false)
     public void deleteMember(Long memberId) {
+        checkExistsById(memberId);
+        memberRepository.deleteById(memberId);
+    }
+
+    public void checkExistsById(Long memberId) {
         if (!memberRepository.existsById(memberId))
             throw new NoSuchElementException("Member not found");
-        memberRepository.deleteById(memberId);
+    }
+
+    public void checkNotExitsByPhoneNumber(String phoneNumber) {
+        if (memberRepository.existsByPhoneNumber(phoneNumber))
+            throw new IllegalArgumentException("Member already exists");
     }
 }

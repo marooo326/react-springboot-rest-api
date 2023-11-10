@@ -16,14 +16,11 @@ import java.time.LocalDate;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class MemberSubscriptionTicket extends MemberTicket {
-    @Column(nullable = false)
-    private LocalDate startDate;
+    @Column
+    private LocalDate startDate = LocalDate.MIN;
 
-    @Column(nullable = false)
-    private LocalDate expireDate;
-
-    @Column(nullable = false)
-    private MemberTicketState state;
+    @Column
+    private LocalDate expireDate = LocalDate.MAX;
 
     @Override
     public void updateTicketState() {

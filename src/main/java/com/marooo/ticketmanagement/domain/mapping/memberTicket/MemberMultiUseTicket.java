@@ -21,9 +21,6 @@ public class MemberMultiUseTicket extends MemberTicket {
     @Column(nullable = false)
     private Integer leftCount;
 
-    @Column(nullable = false)
-    private MemberTicketState state;
-
     @Override
     public void updateTicketState() {
         if (leftCount == 0) {

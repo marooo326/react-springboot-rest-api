@@ -48,11 +48,20 @@ public class TicketService {
         final Ticket ticket = ticketRepository.save(TicketConverter.toTicket(createDto, store));
         return TicketConverter.toDetailDto(ticket);
     }
-    
+
     @Transactional(readOnly = false)
     public void deleteTicket(Long ticketId) {
+        checkExistsById(ticketId);
+        ticketRepository.deleteById(ticketId);
+    }
+
+    public void checkExistsById(Long ticketId) {
         if (!ticketRepository.existsById(ticketId))
             throw new NoSuchElementException("Ticket not found");
-        ticketRepository.deleteById(ticketId);
+    }
+
+    public void checkNotExistsById(Long ticketId) {
+        if (ticketRepository.existsById(ticketId))
+            throw new IllegalArgumentException("Ticket already exists");
     }
 }
