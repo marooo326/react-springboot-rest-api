@@ -1,5 +1,6 @@
 package com.marooo.ticketmanagement.domain.mapping.memberTicket;
 
+import com.marooo.ticketmanagement.exception.ErrorMessage;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,10 +29,12 @@ public class MemberMultiUseTicket extends MemberTicket {
         }
     }
 
+    @Override
     public void useTicket() {
-        if (leftCount > 0) {
-            leftCount--;
-            useCount++;
-        }
+        if (leftCount <= 0)
+            throw new IllegalStateException(ErrorMessage.MEMBER_TICKET_NOT_ENOUGH.getMessage());
+        leftCount--;
+        useCount++;
+        updateTicketState();
     }
 }

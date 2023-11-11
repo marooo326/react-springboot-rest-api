@@ -1,5 +1,6 @@
 package com.marooo.ticketmanagement.domain.mapping.memberTicket;
 
+import com.marooo.ticketmanagement.exception.ErrorMessage;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,5 +28,12 @@ public class MemberSubscriptionTicket extends MemberTicket {
         if (expireDate.isBefore(LocalDate.now())) {
             this.state = MemberTicketState.EXPIRED;
         }
+    }
+
+    @Override
+    public void useTicket() {
+        updateTicketState();
+        if (state == MemberTicketState.EXPIRED)
+            throw new IllegalStateException(ErrorMessage.MEMBER_TICKET_EXPIRED.getMessage());
     }
 }

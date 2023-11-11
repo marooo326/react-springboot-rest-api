@@ -22,7 +22,7 @@ public abstract class MemberTicket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @Column(nullable = false)
     protected MemberTicketState state;
 
@@ -35,4 +35,6 @@ public abstract class MemberTicket {
     private Member member;
 
     public abstract void updateTicketState();
+
+    public abstract void useTicket();
 }
