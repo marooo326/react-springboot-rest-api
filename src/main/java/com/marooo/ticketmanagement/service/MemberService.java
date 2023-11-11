@@ -4,6 +4,7 @@ import com.marooo.ticketmanagement.controller.dto.MemberRequestDto;
 import com.marooo.ticketmanagement.controller.dto.MemberResponseDto;
 import com.marooo.ticketmanagement.converter.MemberConverter;
 import com.marooo.ticketmanagement.domain.member.Member;
+import com.marooo.ticketmanagement.exception.ErrorMessage;
 import com.marooo.ticketmanagement.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,30 +27,22 @@ public class MemberService {
     }
 
     public MemberResponseDto.DetailDto getMemberById(Long memberId) {
-        final Member member = memberRepository.findById(memberId).orElseThrow(() -> new NoSuchElementException("Member not found"));
+        final Member member = memberRepository.findById(memberId).orElseThrow(() -> new NoSuchElementException(ErrorMessage.MEMBER_NOT_FOUND.getMessage()));
         return MemberConverter.toDetailDto(member);
     }
 
     @Transactional(readOnly = false)
     public MemberResponseDto.DetailDto createMember(MemberRequestDto.CreateDto createDto) {
-        checkNotExitsByPhoneNumber(createDto.getPhoneNumber());
+        if (memberRepository.existsByPhoneNumber(createDto.getPhoneNumber()))
+            throw new IllegalArgumentException(ErrorMessage.MEMBER_ALREADY_EXIST.getMessage());
         final Member member = memberRepository.save(MemberConverter.toMember(createDto));
         return MemberConverter.toDetailDto(member);
     }
 
     @Transactional(readOnly = false)
     public void deleteMember(Long memberId) {
-        checkExistsById(memberId);
-        memberRepository.deleteById(memberId);
-    }
-
-    public void checkExistsById(Long memberId) {
         if (!memberRepository.existsById(memberId))
-            throw new NoSuchElementException("Member not found");
-    }
-
-    public void checkNotExitsByPhoneNumber(String phoneNumber) {
-        if (memberRepository.existsByPhoneNumber(phoneNumber))
-            throw new IllegalArgumentException("Member already exists");
+            throw new NoSuchElementException(ErrorMessage.MEMBER_NOT_FOUND.getMessage());
+        memberRepository.deleteById(memberId);
     }
 }

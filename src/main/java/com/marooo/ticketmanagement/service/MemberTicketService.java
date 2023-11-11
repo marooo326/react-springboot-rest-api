@@ -5,6 +5,7 @@ import com.marooo.ticketmanagement.converter.MemberTicketConverter;
 import com.marooo.ticketmanagement.domain.mapping.memberTicket.MemberTicket;
 import com.marooo.ticketmanagement.domain.member.Member;
 import com.marooo.ticketmanagement.domain.ticket.Ticket;
+import com.marooo.ticketmanagement.exception.ErrorMessage;
 import com.marooo.ticketmanagement.repository.MemberRepository;
 import com.marooo.ticketmanagement.repository.MemberTicketRepository;
 import com.marooo.ticketmanagement.repository.TicketRepository;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -29,8 +31,8 @@ public class MemberTicketService {
 
     @Transactional(readOnly = false)
     public MemberTicketResponseDto.SummaryDto assignTicketToMember(Long memberId, Long ticketId) {
-        final Member member = memberRepository.findById(memberId).orElseThrow(() -> new IllegalArgumentException("Member not found"));
-        final Ticket ticket = ticketRepository.findById(ticketId).orElseThrow(() -> new IllegalArgumentException("Ticket not found"));
+        final Member member = memberRepository.findById(memberId).orElseThrow(() -> new IllegalArgumentException(ErrorMessage.MEMBER_NOT_FOUND.getMessage()));
+        final Ticket ticket = ticketRepository.findById(ticketId).orElseThrow(() -> new IllegalArgumentException(ErrorMessage.TICKET_NOT_FOUND.getMessage()));
         final MemberTicket memberTicket = memberTicketRepository.save(MemberTicketConverter.toMemberTicket(member, ticket));
         return MemberTicketConverter.toSummaryDto(memberTicket);
     }
@@ -38,9 +40,9 @@ public class MemberTicketService {
     @Transactional(readOnly = false)
     public void deleteMemberTicket(Long memberId, Long ticketId) {
         if (memberRepository.existsById(memberId))
-            throw new IllegalArgumentException("Member not found");
+            throw new NoSuchElementException(ErrorMessage.MEMBER_NOT_FOUND.getMessage());
         if (ticketRepository.existsById(ticketId))
-            throw new IllegalArgumentException("Ticket not found");
+            throw new NoSuchElementException(ErrorMessage.TICKET_NOT_FOUND.getMessage());
         memberTicketRepository.deleteByMemberIdAndTicketId(memberId, ticketId);
     }
 }

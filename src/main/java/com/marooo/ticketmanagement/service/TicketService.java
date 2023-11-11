@@ -5,6 +5,7 @@ import com.marooo.ticketmanagement.controller.dto.TicketResponseDto;
 import com.marooo.ticketmanagement.converter.TicketConverter;
 import com.marooo.ticketmanagement.domain.store.Store;
 import com.marooo.ticketmanagement.domain.ticket.Ticket;
+import com.marooo.ticketmanagement.exception.ErrorMessage;
 import com.marooo.ticketmanagement.repository.TicketRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,13 +29,13 @@ public class TicketService {
     public TicketResponseDto.SummaryDto getTicketSummary(Long ticketId) {
         return ticketRepository.findById(ticketId)
                 .map(TicketConverter::toSummaryDto)
-                .orElseThrow(() -> new NoSuchElementException("Ticket not found"));
+                .orElseThrow(() -> new NoSuchElementException(ErrorMessage.TICKET_NOT_FOUND.getMessage()));
     }
 
     public TicketResponseDto.DetailDto getTicketDetail(Long ticketId) {
         return ticketRepository.findById(ticketId)
                 .map(TicketConverter::toDetailDto)
-                .orElseThrow(() -> new NoSuchElementException("Ticket not found"));
+                .orElseThrow(() -> new NoSuchElementException(ErrorMessage.TICKET_NOT_FOUND.getMessage()));
     }
 
     public List<TicketResponseDto.SummaryDto> getTicketsByStoreId(Long ticketId) {
@@ -51,17 +52,8 @@ public class TicketService {
 
     @Transactional(readOnly = false)
     public void deleteTicket(Long ticketId) {
-        checkExistsById(ticketId);
-        ticketRepository.deleteById(ticketId);
-    }
-
-    public void checkExistsById(Long ticketId) {
         if (!ticketRepository.existsById(ticketId))
-            throw new NoSuchElementException("Ticket not found");
-    }
-
-    public void checkNotExistsById(Long ticketId) {
-        if (ticketRepository.existsById(ticketId))
-            throw new IllegalArgumentException("Ticket already exists");
+            throw new NoSuchElementException(ErrorMessage.TICKET_NOT_FOUND.getMessage());
+        ticketRepository.deleteById(ticketId);
     }
 }
