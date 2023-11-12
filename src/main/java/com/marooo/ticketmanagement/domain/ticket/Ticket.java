@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -26,6 +27,7 @@ public abstract class Ticket {
     private Long id;
 
     @Column(nullable = false)
+    @Size(min = 2, max = 10, message = "이름은 2자 이상 10자 이하로 입력해주세요.")
     private String name;
 
     @Column
@@ -38,7 +40,7 @@ public abstract class Ticket {
     @JoinColumn(name = "store_id", nullable = false)
     private Store store;
 
-    @OneToMany(mappedBy = "ticket", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ticket", cascade = CascadeType.ALL)
     private List<MemberTicket> memberTickets;
 
     public abstract TicketType getTicketType();

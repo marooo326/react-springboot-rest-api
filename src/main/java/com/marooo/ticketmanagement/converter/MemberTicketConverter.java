@@ -10,6 +10,7 @@ import com.marooo.ticketmanagement.domain.ticket.MultiUseTicket;
 import com.marooo.ticketmanagement.domain.ticket.SubscriptionTicket;
 import com.marooo.ticketmanagement.domain.ticket.Ticket;
 import com.marooo.ticketmanagement.domain.ticket.TicketType;
+import com.marooo.ticketmanagement.exception.ErrorMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -42,7 +43,7 @@ public class MemberTicketConverter {
                     .expireDate(expireDate)
                     .build();
         } else {
-            throw new IllegalArgumentException("TicketType is not valid");
+            throw new IllegalArgumentException(ErrorMessage.TICKET_TYPE_NOT_SUPPORTED.getMessage());
         }
     }
 

@@ -7,6 +7,7 @@ import com.marooo.ticketmanagement.domain.ticket.MultiUseTicket;
 import com.marooo.ticketmanagement.domain.ticket.SubscriptionTicket;
 import com.marooo.ticketmanagement.domain.ticket.Ticket;
 import com.marooo.ticketmanagement.domain.ticket.TicketType;
+import com.marooo.ticketmanagement.exception.ErrorMessage;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -32,7 +33,7 @@ public class TicketConverter {
                     .validDays(createDto.getValidDays())
                     .build();
         } else {
-            throw new IllegalArgumentException("TicketType is not valid");
+            throw new IllegalArgumentException(ErrorMessage.TICKET_TYPE_NOT_SUPPORTED.getMessage());
         }
     }
 
@@ -46,12 +47,12 @@ public class TicketConverter {
     }
 
     public static TicketResponseDto.DetailDto toDetailDto(Ticket ticket) {
-        if (ticket instanceof MultiUseTicket) {
+        if (ticket.getTicketType() == TicketType.MULTI_USE) {
             return toDetailDto((MultiUseTicket) ticket);
-        } else if (ticket instanceof SubscriptionTicket) {
+        } else if (ticket.getTicketType() == TicketType.SUBSCRIPTION) {
             return toDetailDto((SubscriptionTicket) ticket);
         } else {
-            throw new IllegalArgumentException("TicketType is not valid");
+            throw new IllegalArgumentException("ErrorMessage.TICKET_TYPE_NOT_SUPPORTED.getMessage()");
         }
     }
 

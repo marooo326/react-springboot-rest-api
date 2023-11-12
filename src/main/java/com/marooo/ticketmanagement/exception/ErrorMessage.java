@@ -22,7 +22,8 @@ public enum ErrorMessage {
     MEMBER_TICKET_STATE_NOT_ACTIVE("MemberTicketState is not active"),
     // Ticket
     STORE_NOT_FOUND("Store not found"),
-    STORE_ALREADY_EXIST("Store already exist");
+    STORE_ALREADY_EXIST("Store already exist"),
+    TICKET_TYPE_NOT_SUPPORTED("Ticket type not supported");
     private final String message;
 
     ErrorMessage(String message) {
