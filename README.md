@@ -1,18 +1,22 @@
-# [프로젝트] React - Spring Boot 상품 관리 API 구현
-## 프로젝트 소개 😎
-React로 만들어진 Front End가 정해져있는 상황에서,
-백엔드 개발자가 Spring Boot로 상품관리 API를 구현하여 A-Z 최종 서비스를 완성시켜봅니다.
+# [프로젝트] 이용권 관리 시스템
 
-## (옵션) 다른 상품의 API로 진행합니다.
-강의와 다른 상품으로 상품 관리 API를 구현하여 제출해봅니다.
-sample.html을 변경하거나, 새로운 HTML파일을 제작해도 됩니다.
+## 프로젝트 소개
 
-## 이곳은 공개 Repo입니다.
-1. 이 repo를 fork한 뒤
-2. 여러분의 개인 Repo에서 상품관리 API를 A-Z까지 작업하여 
-3. 개발이 끝나면 이 Repo에 PR을 보내어 제출을 완료해주세요.
+헬스장, 클라이밍장, 온라인 구독 시스템 등에서 다양하게 사용되는 이용권들을 관리하는 시스템
 
-## Branch 명명 규칙
-1.  여러분 repo는 알아서 해주시고 😀(본인 레포니 main으로 하셔두 되져)
-2.  prgrms-be-devcourse/spring-board 레포로 PR시 branch는 본인 username을 적어주세요 :)  
-base repo : `여기repo` base : `username` ← head repo : `여러분repo` compare : `main`
+## 프로젝트 환경
+
+- Java 17
+- Gradle
+- Spring Boot 2.7.17
+- Spring Data JPA
+- MySql 8.1.0
+- Docker
+
+## 프로젝트 실행방법
+
+> DB 컨테이너 실행법
+> 1. docker-compose.yml 파일이 있는 디렉토리로 이동 (최상단 database 디렉토리)
+> 2. docker-compose up -d 명령어 실행
+> 3. docker-compose ps 명령어로 컨테이너가 실행되었는지 확인 (3307번 포트로 실행됨)
+> 4. 스프링 부트 애플리케이션 실행
