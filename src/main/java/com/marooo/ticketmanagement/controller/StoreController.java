@@ -6,6 +6,7 @@ import com.marooo.ticketmanagement.controller.dto.TicketRequestDto;
 import com.marooo.ticketmanagement.controller.dto.TicketResponseDto;
 import com.marooo.ticketmanagement.service.StoreService;
 import com.marooo.ticketmanagement.service.TicketService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -24,21 +25,25 @@ public class StoreController {
     private final StoreService storeService;
     private final TicketService ticketService;
 
+    @Operation(summary = "모든 가게 조회", description = "모든 가게를 조회합니다.", tags = {"Store Controller"})
     @GetMapping
     public ResponseEntity<List<StoreResponseDto.DetailDto>> getAllStores() {
         return ResponseEntity.ok(storeService.getAllStores());
     }
 
+    @Operation(summary = "특정 가게 조회", description = "특정한 가게를 조회합니다.", tags = {"Store Controller"})
     @GetMapping("/{storeId}")
     public ResponseEntity<StoreResponseDto.DetailDto> getStore(@PathVariable Long storeId) {
         return ResponseEntity.ok(storeService.getStoreById(storeId));
     }
 
+    @Operation(summary = "가게가 발행한 이용권 조회", description = "가게가 발행한 이용권을 조회합니다.", tags = {"Store Controller"})
     @GetMapping("/{storeId}/tickets")
     public ResponseEntity<List<TicketResponseDto.SummaryDto>> getTicketsFromStore(@PathVariable Long storeId) {
         return ResponseEntity.ok(storeService.getTicketsByStoreId(storeId));
     }
 
+    @Operation(summary = "새로운 가게 생성", description = "새로운 가게를 생성합니다.", tags = {"Store Controller"})
     @PostMapping
     public ResponseEntity<StoreResponseDto.DetailDto> createStore(@RequestBody @NonNull StoreRequestDto.CreateDto createDto,
                                                                   UriComponentsBuilder uriComponentsBuilder) {
@@ -49,6 +54,7 @@ public class StoreController {
         return ResponseEntity.created(location).body(storeDetail);
     }
 
+    @Operation(summary = "새로운 이용권 생성", description = "새로운 이용권을 생성합니다.", tags = {"Store Controller"})
     @PostMapping("/{storeId}/tickets")
     public ResponseEntity<TicketResponseDto.DetailDto> createTicket(@PathVariable Long storeId,
                                                                     @RequestBody @NonNull TicketRequestDto.CreateDto createDto,
@@ -60,6 +66,7 @@ public class StoreController {
         return ResponseEntity.created(location).body(ticketDetail);
     }
 
+    @Operation(summary = "가게 삭제", description = "특정 가게를 삭제합니다.", tags = {"Store Controller"})
     @DeleteMapping("/{storeId}")
     public ResponseEntity<Void> deleteStore(@PathVariable @NonNull Long storeId) {
         storeService.deleteStore(storeId);
