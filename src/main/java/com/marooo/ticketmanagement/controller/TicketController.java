@@ -5,7 +5,10 @@ import com.marooo.ticketmanagement.service.TicketService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -27,12 +30,5 @@ public class TicketController {
     @GetMapping("/{ticketId}")
     public ResponseEntity<TicketResponseDto.DetailDto> getTicketDetail(@PathVariable Long ticketId) {
         return ResponseEntity.ok(ticketService.getTicketDetail(ticketId));
-    }
-
-    @Operation(summary = "이용권 삭제", description = "ID를 이용해 특정 이용권을 삭제합니다.", tags = {"Ticket Controller"})
-    @DeleteMapping("/{ticketId}")
-    public ResponseEntity<Void> deleteTicket(@PathVariable Long ticketId) {
-        ticketService.deleteTicket(ticketId);
-        return ResponseEntity.noContent().build();
     }
 }

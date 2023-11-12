@@ -72,4 +72,11 @@ public class StoreController {
         storeService.deleteStore(storeId);
         return ResponseEntity.noContent().build();
     }
+
+    @Operation(summary = "이용권 삭제", description = "ID를 이용해 특정 이용권을 삭제합니다.", tags = {"Store Controller"})
+    @DeleteMapping("/{storeId}/tickets/{ticketId}")
+    public ResponseEntity<Void> deleteTicket(@PathVariable Long storeId, @PathVariable Long ticketId) {
+        ticketService.deleteTicket(ticketId);
+        return ResponseEntity.noContent().build();
+    }
 }
