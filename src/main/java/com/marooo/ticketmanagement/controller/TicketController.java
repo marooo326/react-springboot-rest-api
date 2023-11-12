@@ -22,13 +22,13 @@ public class TicketController {
 
     @Operation(summary = "모든 이용권 조회", description = "모든 이용권을 조회합니다.", tags = {"Ticket Controller"})
     @GetMapping
-    public ResponseEntity<List<TicketResponseDto.DetailDto>> getAllTickets() {
+    public ResponseEntity<List<TicketResponseDto.TicketDetailDto>> getAllTickets() {
         return ResponseEntity.ok(ticketService.getAllTickets());
     }
 
     @Operation(summary = "특정 이용권 조회", description = "ID를 이용해 특정 이용권을 조회합니다.", tags = {"Ticket Controller"})
     @GetMapping("/{ticketId}")
-    public ResponseEntity<TicketResponseDto.DetailDto> getTicketDetail(@PathVariable Long ticketId) {
+    public ResponseEntity<TicketResponseDto.TicketDetailDto> getTicketDetail(@PathVariable Long ticketId) {
         return ResponseEntity.ok(ticketService.getTicketDetail(ticketId));
     }
 }

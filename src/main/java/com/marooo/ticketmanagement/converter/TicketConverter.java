@@ -15,30 +15,30 @@ import java.time.LocalDateTime;
 @Component
 public class TicketConverter {
 
-    public static Ticket toTicket(TicketRequestDto.CreateDto createDto, Store store) {
-        if (createDto.getTicketType() == TicketType.MULTI_USE) {
+    public static Ticket toTicket(TicketRequestDto.TicketCreateDto ticketCreateDto, Store store) {
+        if (ticketCreateDto.getTicketType() == TicketType.MULTI_USE) {
             return MultiUseTicket.builder()
-                    .name(createDto.getName())
-                    .description(createDto.getDescription())
+                    .name(ticketCreateDto.getName())
+                    .description(ticketCreateDto.getDescription())
                     .createdAt(LocalDateTime.now())
                     .store(store)
-                    .useLimit(createDto.getUseLimit())
+                    .useLimit(ticketCreateDto.getUseLimit())
                     .build();
-        } else if (createDto.getTicketType() == TicketType.SUBSCRIPTION) {
+        } else if (ticketCreateDto.getTicketType() == TicketType.SUBSCRIPTION) {
             return SubscriptionTicket.builder()
-                    .name(createDto.getName())
-                    .description(createDto.getDescription())
+                    .name(ticketCreateDto.getName())
+                    .description(ticketCreateDto.getDescription())
                     .createdAt(LocalDateTime.now())
                     .store(store)
-                    .validDays(createDto.getValidDays())
+                    .validDays(ticketCreateDto.getValidDays())
                     .build();
         } else {
             throw new IllegalArgumentException(ErrorMessage.TICKET_TYPE_NOT_SUPPORTED.getMessage());
         }
     }
 
-    public static TicketResponseDto.SummaryDto toSummaryDto(Ticket ticket) {
-        return TicketResponseDto.SummaryDto.builder()
+    public static TicketResponseDto.TicketSummaryDto toSummaryDto(Ticket ticket) {
+        return TicketResponseDto.TicketSummaryDto.builder()
                 .id(ticket.getId())
                 .name(ticket.getName())
                 .description(ticket.getDescription())
@@ -46,7 +46,7 @@ public class TicketConverter {
                 .build();
     }
 
-    public static TicketResponseDto.DetailDto toDetailDto(Ticket ticket) {
+    public static TicketResponseDto.TicketDetailDto toDetailDto(Ticket ticket) {
         if (ticket.getTicketType() == TicketType.MULTI_USE) {
             return toDetailDto((MultiUseTicket) ticket);
         } else if (ticket.getTicketType() == TicketType.SUBSCRIPTION) {
@@ -56,8 +56,8 @@ public class TicketConverter {
         }
     }
 
-    public static TicketResponseDto.DetailDto toDetailDto(MultiUseTicket ticket) {
-        return TicketResponseDto.DetailDto.builder()
+    public static TicketResponseDto.TicketDetailDto toDetailDto(MultiUseTicket ticket) {
+        return TicketResponseDto.TicketDetailDto.builder()
                 .id(ticket.getId())
                 .name(ticket.getName())
                 .description(ticket.getDescription())
@@ -68,8 +68,8 @@ public class TicketConverter {
                 .build();
     }
 
-    public static TicketResponseDto.DetailDto toDetailDto(SubscriptionTicket ticket) {
-        return TicketResponseDto.DetailDto.builder()
+    public static TicketResponseDto.TicketDetailDto toDetailDto(SubscriptionTicket ticket) {
+        return TicketResponseDto.TicketDetailDto.builder()
                 .id(ticket.getId())
                 .name(ticket.getName())
                 .description(ticket.getDescription())

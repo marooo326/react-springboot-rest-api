@@ -27,27 +27,27 @@ public class StoreController {
 
     @Operation(summary = "모든 가게 조회", description = "모든 가게를 조회합니다.", tags = {"Store Controller"})
     @GetMapping
-    public ResponseEntity<List<StoreResponseDto.DetailDto>> getAllStores() {
+    public ResponseEntity<List<StoreResponseDto.StoreDetailDto>> getAllStores() {
         return ResponseEntity.ok(storeService.getAllStores());
     }
 
     @Operation(summary = "특정 가게 조회", description = "특정한 가게를 조회합니다.", tags = {"Store Controller"})
     @GetMapping("/{storeId}")
-    public ResponseEntity<StoreResponseDto.DetailDto> getStore(@PathVariable Long storeId) {
+    public ResponseEntity<StoreResponseDto.StoreDetailDto> getStore(@PathVariable Long storeId) {
         return ResponseEntity.ok(storeService.getStoreById(storeId));
     }
 
     @Operation(summary = "가게가 발행한 이용권 조회", description = "가게가 발행한 이용권을 조회합니다.", tags = {"Store Controller"})
     @GetMapping("/{storeId}/tickets")
-    public ResponseEntity<List<TicketResponseDto.SummaryDto>> getTicketsFromStore(@PathVariable Long storeId) {
+    public ResponseEntity<List<TicketResponseDto.TicketSummaryDto>> getTicketsFromStore(@PathVariable Long storeId) {
         return ResponseEntity.ok(storeService.getTicketsByStoreId(storeId));
     }
 
     @Operation(summary = "새로운 가게 생성", description = "새로운 가게를 생성합니다.", tags = {"Store Controller"})
     @PostMapping
-    public ResponseEntity<StoreResponseDto.DetailDto> createStore(@RequestBody @NonNull StoreRequestDto.CreateDto createDto,
-                                                                  UriComponentsBuilder uriComponentsBuilder) {
-        final StoreResponseDto.DetailDto storeDetail = storeService.createStore(createDto);
+    public ResponseEntity<StoreResponseDto.StoreDetailDto> createStore(@RequestBody @NonNull StoreRequestDto.StoreCreateDto storeCreateDto,
+                                                                       UriComponentsBuilder uriComponentsBuilder) {
+        final StoreResponseDto.StoreDetailDto storeDetail = storeService.createStore(storeCreateDto);
         URI location = uriComponentsBuilder.path(BASE_URI + "/{id}")
                 .buildAndExpand(storeDetail.getId())
                 .toUri();
@@ -56,10 +56,10 @@ public class StoreController {
 
     @Operation(summary = "새로운 이용권 생성", description = "새로운 이용권을 생성합니다.", tags = {"Store Controller"})
     @PostMapping("/{storeId}/tickets")
-    public ResponseEntity<TicketResponseDto.DetailDto> createTicket(@PathVariable Long storeId,
-                                                                    @RequestBody @NonNull TicketRequestDto.CreateDto createDto,
-                                                                    UriComponentsBuilder uriComponentsBuilder) {
-        final TicketResponseDto.DetailDto ticketDetail = storeService.createTicket(storeId, createDto);
+    public ResponseEntity<TicketResponseDto.TicketDetailDto> createTicket(@PathVariable Long storeId,
+                                                                          @RequestBody @NonNull TicketRequestDto.TicketCreateDto ticketCreateDto,
+                                                                          UriComponentsBuilder uriComponentsBuilder) {
+        final TicketResponseDto.TicketDetailDto ticketDetail = storeService.createTicket(storeId, ticketCreateDto);
         URI location = uriComponentsBuilder.path("/tickets/{id}")
                 .buildAndExpand(ticketDetail.getId())
                 .toUri();

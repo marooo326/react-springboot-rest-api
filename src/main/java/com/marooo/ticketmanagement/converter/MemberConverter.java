@@ -12,18 +12,18 @@ import java.util.ArrayList;
 @Component
 public class MemberConverter {
 
-    public static Member toMember(MemberRequestDto.CreateDto createDto) {
+    public static Member toMember(MemberRequestDto.MemberCreateDto memberCreateDto) {
         return Member.builder()
-                .name(createDto.getName())
-                .phoneNumber(createDto.getPhoneNumber())
+                .name(memberCreateDto.getName())
+                .phoneNumber(memberCreateDto.getPhoneNumber())
                 .createdAt(LocalDateTime.now())
                 .status(MemberState.ACTIVE)
                 .memberTickets(new ArrayList<>())
                 .build();
     }
 
-    public static MemberResponseDto.DetailDto toDetailDto(Member member) {
-        return MemberResponseDto.DetailDto.builder()
+    public static MemberResponseDto.MemberDetailDto toDetailDto(Member member) {
+        return MemberResponseDto.MemberDetailDto.builder()
                 .id(member.getId())
                 .name(member.getName())
                 .phoneNumber(member.getPhoneNumber())

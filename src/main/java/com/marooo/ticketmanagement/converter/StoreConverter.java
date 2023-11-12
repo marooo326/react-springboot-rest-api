@@ -11,18 +11,18 @@ import java.util.ArrayList;
 @Component
 public class StoreConverter {
 
-    public static Store toStore(StoreRequestDto.CreateDto createDto) {
+    public static Store toStore(StoreRequestDto.StoreCreateDto storeCreateDto) {
         return Store.builder()
-                .name(createDto.getName())
-                .phoneNumber(createDto.getPhoneNumber())
-                .description(createDto.getDescription())
+                .name(storeCreateDto.getName())
+                .phoneNumber(storeCreateDto.getPhoneNumber())
+                .description(storeCreateDto.getDescription())
                 .createdAt(LocalDateTime.now())
                 .tickets(new ArrayList<>())
                 .build();
     }
 
-    public static StoreResponseDto.DetailDto toDetailDto(Store store) {
-        return StoreResponseDto.DetailDto.builder()
+    public static StoreResponseDto.StoreDetailDto toDetailDto(Store store) {
+        return StoreResponseDto.StoreDetailDto.builder()
                 .id(store.getId())
                 .name(store.getName())
                 .phoneNumber(store.getPhoneNumber())

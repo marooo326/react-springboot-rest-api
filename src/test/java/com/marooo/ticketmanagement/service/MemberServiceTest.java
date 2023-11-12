@@ -22,7 +22,7 @@ class MemberServiceTest {
     @Autowired
     private MemberRepository memberRepository;
 
-    MemberRequestDto.CreateDto testDto = MemberRequestDto.CreateDto.builder()
+    MemberRequestDto.MemberCreateDto testDto = MemberRequestDto.MemberCreateDto.builder()
             .name("홍길동")
             .phoneNumber("010-1111-1111")
             .build();
@@ -37,13 +37,13 @@ class MemberServiceTest {
     @DisplayName("이름과 전화번호로 멤버를 생성한다.")
     void createMember() {
         //given
-        MemberRequestDto.CreateDto createDto = MemberRequestDto.CreateDto.builder()
+        MemberRequestDto.MemberCreateDto memberCreateDto = MemberRequestDto.MemberCreateDto.builder()
                 .name("김개똥")
                 .phoneNumber("010-4444-4444")
                 .build();
 
         //when
-        final MemberResponseDto.DetailDto member = memberService.createMember(createDto);
+        final MemberResponseDto.MemberDetailDto member = memberService.createMember(memberCreateDto);
 
         //then
         assertThat(memberService.getAllMembers()).hasSize(2);
@@ -68,14 +68,14 @@ class MemberServiceTest {
     @DisplayName("Id로 멤버를 조회한다.")
     void getMemberById() {
         //given
-        MemberRequestDto.CreateDto createDto = MemberRequestDto.CreateDto.builder()
+        MemberRequestDto.MemberCreateDto memberCreateDto = MemberRequestDto.MemberCreateDto.builder()
                 .name("김개똥")
                 .phoneNumber("010-4444-4444")
                 .build();
-        final MemberResponseDto.DetailDto member = memberService.createMember(createDto);
+        final MemberResponseDto.MemberDetailDto member = memberService.createMember(memberCreateDto);
 
         //when
-        final MemberResponseDto.DetailDto memberById = memberService.getMemberById(member.getId());
+        final MemberResponseDto.MemberDetailDto memberById = memberService.getMemberById(member.getId());
 
         //then
         assertThat(memberById.getId()).isEqualTo(member.getId());
@@ -94,11 +94,11 @@ class MemberServiceTest {
     @DisplayName("Id로 멤버를 삭제한다.")
     void deleteMember() {
         //given
-        MemberRequestDto.CreateDto createDto = MemberRequestDto.CreateDto.builder()
+        MemberRequestDto.MemberCreateDto memberCreateDto = MemberRequestDto.MemberCreateDto.builder()
                 .name("김개똥")
                 .phoneNumber("010-4444-4444")
                 .build();
-        final MemberResponseDto.DetailDto member = memberService.createMember(createDto);
+        final MemberResponseDto.MemberDetailDto member = memberService.createMember(memberCreateDto);
 
         //when
         memberService.deleteMember(member.getId());

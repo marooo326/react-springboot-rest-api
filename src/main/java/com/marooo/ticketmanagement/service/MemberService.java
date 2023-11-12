@@ -20,22 +20,22 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
-    public List<MemberResponseDto.DetailDto> getAllMembers() {
+    public List<MemberResponseDto.MemberDetailDto> getAllMembers() {
         return memberRepository.findAll().stream()
                 .map(MemberConverter::toDetailDto)
                 .toList();
     }
 
-    public MemberResponseDto.DetailDto getMemberById(Long memberId) {
+    public MemberResponseDto.MemberDetailDto getMemberById(Long memberId) {
         final Member member = memberRepository.findById(memberId).orElseThrow(() -> new NoSuchElementException(ErrorMessage.MEMBER_NOT_FOUND.getMessage()));
         return MemberConverter.toDetailDto(member);
     }
 
     @Transactional(readOnly = false)
-    public MemberResponseDto.DetailDto createMember(MemberRequestDto.CreateDto createDto) {
-        if (memberRepository.existsByPhoneNumber(createDto.getPhoneNumber()))
+    public MemberResponseDto.MemberDetailDto createMember(MemberRequestDto.MemberCreateDto memberCreateDto) {
+        if (memberRepository.existsByPhoneNumber(memberCreateDto.getPhoneNumber()))
             throw new IllegalArgumentException(ErrorMessage.MEMBER_ALREADY_EXIST.getMessage());
-        final Member member = memberRepository.save(MemberConverter.toMember(createDto));
+        final Member member = memberRepository.save(MemberConverter.toMember(memberCreateDto));
         return MemberConverter.toDetailDto(member);
     }
 

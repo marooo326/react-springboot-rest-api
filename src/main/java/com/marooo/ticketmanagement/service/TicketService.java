@@ -20,33 +20,33 @@ import java.util.NoSuchElementException;
 public class TicketService {
     private final TicketRepository ticketRepository;
 
-    public List<TicketResponseDto.DetailDto> getAllTickets() {
+    public List<TicketResponseDto.TicketDetailDto> getAllTickets() {
         return ticketRepository.findAll().stream()
                 .map(TicketConverter::toDetailDto)
                 .toList();
     }
 
-    public TicketResponseDto.SummaryDto getTicketSummary(Long ticketId) {
+    public TicketResponseDto.TicketSummaryDto getTicketSummary(Long ticketId) {
         return ticketRepository.findById(ticketId)
                 .map(TicketConverter::toSummaryDto)
                 .orElseThrow(() -> new NoSuchElementException(ErrorMessage.TICKET_NOT_FOUND.getMessage()));
     }
 
-    public TicketResponseDto.DetailDto getTicketDetail(Long ticketId) {
+    public TicketResponseDto.TicketDetailDto getTicketDetail(Long ticketId) {
         return ticketRepository.findById(ticketId)
                 .map(TicketConverter::toDetailDto)
                 .orElseThrow(() -> new NoSuchElementException(ErrorMessage.TICKET_NOT_FOUND.getMessage()));
     }
 
-    public List<TicketResponseDto.SummaryDto> getTicketsByStoreId(Long ticketId) {
+    public List<TicketResponseDto.TicketSummaryDto> getTicketsByStoreId(Long ticketId) {
         return ticketRepository.findByStoreId(ticketId).stream()
                 .map(TicketConverter::toSummaryDto)
                 .toList();
     }
 
     @Transactional(readOnly = false)
-    public TicketResponseDto.DetailDto createTicket(TicketRequestDto.CreateDto createDto, Store store) {
-        final Ticket ticket = ticketRepository.save(TicketConverter.toTicket(createDto, store));
+    public TicketResponseDto.TicketDetailDto createTicket(TicketRequestDto.TicketCreateDto ticketCreateDto, Store store) {
+        final Ticket ticket = ticketRepository.save(TicketConverter.toTicket(ticketCreateDto, store));
         return TicketConverter.toDetailDto(ticket);
     }
 

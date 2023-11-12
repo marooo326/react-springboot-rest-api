@@ -47,8 +47,8 @@ public class MemberTicketConverter {
         }
     }
 
-    public static MemberTicketResponseDto.SummaryDto toSummaryDto(MemberTicket memberTicket) {
-        return MemberTicketResponseDto.SummaryDto.builder()
+    public static MemberTicketResponseDto.MemberTicketSummaryDto toSummaryDto(MemberTicket memberTicket) {
+        return MemberTicketResponseDto.MemberTicketSummaryDto.builder()
                 .memberTicketId(memberTicket.getId())
                 .memberId(memberTicket.getMember().getId())
                 .ticketId(memberTicket.getTicket().getId())
@@ -56,8 +56,8 @@ public class MemberTicketConverter {
                 .build();
     }
 
-    public static MemberTicketResponseDto.DetailDto toDetailDto(MemberTicket memberTicket) {
-        return MemberTicketResponseDto.DetailDto.builder()
+    public static MemberTicketResponseDto.MemberTicketDetailDto toDetailDto(MemberTicket memberTicket) {
+        return MemberTicketResponseDto.MemberTicketDetailDto.builder()
                 .memberTicketId(memberTicket.getId())
                 .memberId(memberTicket.getMember().getId())
                 .ticketId(memberTicket.getTicket().getId())

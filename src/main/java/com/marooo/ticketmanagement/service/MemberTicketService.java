@@ -24,13 +24,13 @@ public class MemberTicketService {
     private final TicketRepository ticketRepository;
     private final MemberTicketRepository memberTicketRepository;
 
-    public List<MemberTicketResponseDto.DetailDto> getMemberTicketsByMemberId(Long memberId) {
+    public List<MemberTicketResponseDto.MemberTicketDetailDto> getMemberTicketsByMemberId(Long memberId) {
         return memberTicketRepository.findByMemberId(memberId).stream()
                 .map(MemberTicketConverter::toDetailDto).toList();
     }
 
     @Transactional(readOnly = false)
-    public MemberTicketResponseDto.SummaryDto assignTicketToMember(Long memberId, Long ticketId) {
+    public MemberTicketResponseDto.MemberTicketSummaryDto assignTicketToMember(Long memberId, Long ticketId) {
         final Member member = memberRepository.findById(memberId).orElseThrow(() -> new IllegalArgumentException(ErrorMessage.MEMBER_NOT_FOUND.getMessage()));
         final Ticket ticket = ticketRepository.findById(ticketId).orElseThrow(() -> new IllegalArgumentException(ErrorMessage.TICKET_NOT_FOUND.getMessage()));
         final MemberTicket memberTicket = memberTicketRepository.save(MemberTicketConverter.toMemberTicket(member, ticket));
