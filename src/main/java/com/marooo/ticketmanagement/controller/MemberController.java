@@ -6,12 +6,12 @@ import com.marooo.ticketmanagement.controller.dto.MemberTicketResponseDto;
 import com.marooo.ticketmanagement.service.MemberService;
 import com.marooo.ticketmanagement.service.MemberTicketService;
 import io.swagger.v3.oas.annotations.Operation;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -44,7 +44,7 @@ public class MemberController {
 
     @Operation(summary = "새로운 회원 등록", description = "새로운 회원을 등록합니다.", tags = {"Member Controller"})
     @PostMapping
-    public ResponseEntity<MemberResponseDto.MemberDetailDto> createMember(@RequestBody @NonNull MemberRequestDto.MemberCreateDto memberCreateDto,
+    public ResponseEntity<MemberResponseDto.MemberDetailDto> createMember(@RequestBody @Valid MemberRequestDto.MemberCreateDto memberCreateDto,
                                                                           UriComponentsBuilder uriComponentsBuilder) {
         MemberResponseDto.MemberDetailDto memberDetail = memberService.createMember(memberCreateDto);
         URI location = uriComponentsBuilder.path(BASE_URI + "/{id}")

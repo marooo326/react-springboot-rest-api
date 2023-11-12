@@ -52,7 +52,7 @@ public class TicketConverter {
         } else if (ticket.getTicketType() == TicketType.SUBSCRIPTION) {
             return toDetailDto((SubscriptionTicket) ticket);
         } else {
-            throw new IllegalArgumentException("ErrorMessage.TICKET_TYPE_NOT_SUPPORTED.getMessage()");
+            throw new IllegalArgumentException(ErrorMessage.TICKET_TYPE_NOT_SUPPORTED.getMessage());
         }
     }
 

@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -45,7 +46,7 @@ public class StoreController {
 
     @Operation(summary = "새로운 가게 생성", description = "새로운 가게를 생성합니다.", tags = {"Store Controller"})
     @PostMapping
-    public ResponseEntity<StoreResponseDto.StoreDetailDto> createStore(@RequestBody @NonNull StoreRequestDto.StoreCreateDto storeCreateDto,
+    public ResponseEntity<StoreResponseDto.StoreDetailDto> createStore(@RequestBody @Valid StoreRequestDto.StoreCreateDto storeCreateDto,
                                                                        UriComponentsBuilder uriComponentsBuilder) {
         final StoreResponseDto.StoreDetailDto storeDetail = storeService.createStore(storeCreateDto);
         URI location = uriComponentsBuilder.path(BASE_URI + "/{id}")
@@ -57,7 +58,7 @@ public class StoreController {
     @Operation(summary = "새로운 이용권 생성", description = "새로운 이용권을 생성합니다.", tags = {"Store Controller"})
     @PostMapping("/{storeId}/tickets")
     public ResponseEntity<TicketResponseDto.TicketDetailDto> createTicket(@PathVariable Long storeId,
-                                                                          @RequestBody @NonNull TicketRequestDto.TicketCreateDto ticketCreateDto,
+                                                                          @RequestBody @Valid TicketRequestDto.TicketCreateDto ticketCreateDto,
                                                                           UriComponentsBuilder uriComponentsBuilder) {
         final TicketResponseDto.TicketDetailDto ticketDetail = storeService.createTicket(storeId, ticketCreateDto);
         URI location = uriComponentsBuilder.path("/tickets/{id}")

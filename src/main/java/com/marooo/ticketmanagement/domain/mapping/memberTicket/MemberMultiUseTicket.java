@@ -16,10 +16,10 @@ import javax.persistence.Entity;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class MemberMultiUseTicket extends MemberTicket {
-    @Column(nullable = false)
+    @Column
     private Integer useCount;
 
-    @Column(nullable = false)
+    @Column
     private Integer leftCount;
 
     @Override
