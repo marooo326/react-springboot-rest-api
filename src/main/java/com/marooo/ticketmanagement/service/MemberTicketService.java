@@ -25,6 +25,8 @@ public class MemberTicketService {
     private final MemberTicketRepository memberTicketRepository;
 
     public List<MemberTicketResponseDto.MemberTicketDetailDto> getMemberTicketsByMemberId(Long memberId) {
+        if (!memberRepository.existsById(memberId))
+            throw new NoSuchElementException(ErrorMessage.MEMBER_NOT_FOUND.getMessage());
         return memberTicketRepository.findByMemberId(memberId).stream()
                 .map(MemberTicketConverter::toDetailDto).toList();
     }
