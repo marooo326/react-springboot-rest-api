@@ -1,10 +1,11 @@
 package com.marooo.ticketmanagement.domain.member;
 
+import com.marooo.ticketmanagement.domain.BaseEntity;
 import com.marooo.ticketmanagement.domain.mapping.memberTicket.MemberTicket;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -13,7 +14,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class Member {
+public class Member extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,9 +29,6 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private MemberState status;
 
-    @Column(nullable = false)
-    private LocalDateTime createdAt;
-
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "member")
-    private List<MemberTicket> memberTickets;
+    private List<MemberTicket> memberTickets = new ArrayList<>();
 }

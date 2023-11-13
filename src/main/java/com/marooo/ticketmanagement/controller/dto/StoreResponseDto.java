@@ -17,5 +17,6 @@ public class StoreResponseDto {
         private String phoneNumber;
         private String description;
         private LocalDateTime createdAt;
+        private LocalDateTime updatedAt;
     }
 }

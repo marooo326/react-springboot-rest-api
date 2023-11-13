@@ -8,11 +8,12 @@ import com.marooo.ticketmanagement.domain.ticket.SubscriptionTicket;
 import com.marooo.ticketmanagement.domain.ticket.Ticket;
 import com.marooo.ticketmanagement.domain.ticket.TicketType;
 import com.marooo.ticketmanagement.exception.ErrorMessage;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
-
 @Component
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TicketConverter {
 
     public static Ticket toTicket(TicketRequestDto.TicketCreateDto ticketCreateDto, Store store) {
@@ -20,7 +21,6 @@ public class TicketConverter {
             return MultiUseTicket.builder()
                     .name(ticketCreateDto.getName())
                     .description(ticketCreateDto.getDescription())
-                    .createdAt(LocalDateTime.now())
                     .store(store)
                     .useLimit(ticketCreateDto.getUseLimit())
                     .build();
@@ -28,7 +28,6 @@ public class TicketConverter {
             return SubscriptionTicket.builder()
                     .name(ticketCreateDto.getName())
                     .description(ticketCreateDto.getDescription())
-                    .createdAt(LocalDateTime.now())
                     .store(store)
                     .validDays(ticketCreateDto.getValidDays())
                     .build();
@@ -63,8 +62,9 @@ public class TicketConverter {
                 .description(ticket.getDescription())
                 .useLimit(ticket.getUseLimit())
                 .ticketType(ticket.getTicketType())
-                .createdAt(ticket.getCreatedAt())
                 .storeId(ticket.getStore().getId())
+                .createdAt(ticket.getCreatedAt())
+                .updatedAt(ticket.getUpdatedAt())
                 .build();
     }
 
@@ -75,8 +75,9 @@ public class TicketConverter {
                 .description(ticket.getDescription())
                 .validDays(ticket.getValidDays())
                 .ticketType(ticket.getTicketType())
-                .createdAt(ticket.getCreatedAt())
                 .storeId(ticket.getStore().getId())
+                .createdAt(ticket.getCreatedAt())
+                .updatedAt(ticket.getUpdatedAt())
                 .build();
     }
 }

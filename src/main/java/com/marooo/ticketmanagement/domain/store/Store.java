@@ -1,10 +1,11 @@
 package com.marooo.ticketmanagement.domain.store;
 
+import com.marooo.ticketmanagement.domain.BaseEntity;
 import com.marooo.ticketmanagement.domain.ticket.Ticket;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -13,7 +14,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class Store {
+public class Store extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,9 +28,6 @@ public class Store {
     @Column
     private String description;
 
-    @Column
-    private LocalDateTime createdAt;
-
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "store", cascade = CascadeType.ALL)
-    private List<Ticket> tickets;
+    private List<Ticket> tickets = new ArrayList<>();
 }

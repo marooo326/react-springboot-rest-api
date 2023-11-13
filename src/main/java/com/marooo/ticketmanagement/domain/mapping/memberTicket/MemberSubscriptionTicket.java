@@ -1,10 +1,7 @@
 package com.marooo.ticketmanagement.domain.mapping.memberTicket;
 
 import com.marooo.ticketmanagement.exception.ErrorMessage;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Column;
@@ -18,9 +15,11 @@ import java.time.LocalDate;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class MemberSubscriptionTicket extends MemberTicket {
     @Column
+    @Builder.Default
     private LocalDate startDate = LocalDate.MIN;
 
     @Column
+    @Builder.Default
     private LocalDate expireDate = LocalDate.MAX;
 
     @Override

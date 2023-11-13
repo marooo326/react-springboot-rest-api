@@ -4,6 +4,9 @@ import com.marooo.ticketmanagement.domain.mapping.memberTicket.MemberTicketState
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 public class MemberTicketResponseDto {
 
     @Schema(description = "회원-이용권 요약 정보 DTO")
@@ -16,6 +19,8 @@ public class MemberTicketResponseDto {
         private Long memberId;
         private Long ticketId;
         private MemberTicketState state;
+        private LocalDateTime createdAt;
+        private LocalDateTime updatedAt;
     }
 
     @Schema(description = "회원-이용권 세부 정보 DTO")
@@ -27,11 +32,13 @@ public class MemberTicketResponseDto {
         private Long memberTicketId;
         private Long memberId;
         private Long ticketId;
+        private TicketResponseDto.TicketDetailDto ticket;
         private Integer useCount;
         private Integer leftCount;
-        private String startDate;
-        private String expireDate;
+        private LocalDate startDate;
+        private LocalDate expireDate;
         private MemberTicketState state;
-        private TicketResponseDto.TicketDetailDto ticket;
+        private LocalDateTime createdAt;
+        private LocalDateTime updatedAt;
     }
 }

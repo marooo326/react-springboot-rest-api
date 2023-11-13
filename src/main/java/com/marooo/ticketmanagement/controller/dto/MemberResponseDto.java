@@ -18,5 +18,6 @@ public class MemberResponseDto {
         private String phoneNumber;
         private MemberState status;
         private LocalDateTime createdAt;
+        private LocalDateTime updatedAt;
     }
 }

@@ -4,21 +4,19 @@ import com.marooo.ticketmanagement.controller.dto.MemberRequestDto;
 import com.marooo.ticketmanagement.controller.dto.MemberResponseDto;
 import com.marooo.ticketmanagement.domain.member.Member;
 import com.marooo.ticketmanagement.domain.member.MemberState;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-
 @Component
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class MemberConverter {
 
     public static Member toMember(MemberRequestDto.MemberCreateDto memberCreateDto) {
         return Member.builder()
                 .name(memberCreateDto.getName())
                 .phoneNumber(memberCreateDto.getPhoneNumber())
-                .createdAt(LocalDateTime.now())
                 .status(MemberState.ACTIVE)
-                .memberTickets(new ArrayList<>())
                 .build();
     }
 
@@ -29,6 +27,7 @@ public class MemberConverter {
                 .phoneNumber(member.getPhoneNumber())
                 .status(member.getStatus())
                 .createdAt(member.getCreatedAt())
+                .updatedAt(member.getUpdatedAt())
                 .build();
     }
 }

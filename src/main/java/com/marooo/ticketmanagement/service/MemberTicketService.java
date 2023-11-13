@@ -24,6 +24,7 @@ public class MemberTicketService {
     private final TicketRepository ticketRepository;
     private final MemberTicketRepository memberTicketRepository;
 
+    @Transactional(readOnly = false)
     public List<MemberTicketResponseDto.MemberTicketDetailDto> getMemberTicketsByMemberId(Long memberId) {
         if (!memberRepository.existsById(memberId))
             throw new NoSuchElementException(ErrorMessage.MEMBER_NOT_FOUND.getMessage());

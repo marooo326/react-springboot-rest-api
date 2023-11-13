@@ -11,16 +11,15 @@ import com.marooo.ticketmanagement.domain.ticket.SubscriptionTicket;
 import com.marooo.ticketmanagement.domain.ticket.Ticket;
 import com.marooo.ticketmanagement.domain.ticket.TicketType;
 import com.marooo.ticketmanagement.exception.ErrorMessage;
-import lombok.RequiredArgsConstructor;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 
 @Component
-@RequiredArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class MemberTicketConverter {
-    private static final MemberConverter memberConverter = new MemberConverter();
-    private static final TicketConverter ticketConverter = new TicketConverter();
 
     public static MemberTicket toMemberTicket(Member member, Ticket ticket) {
         final TicketType ticketType = ticket.getTicketType();
@@ -53,20 +52,40 @@ public class MemberTicketConverter {
                 .memberId(memberTicket.getMember().getId())
                 .ticketId(memberTicket.getTicket().getId())
                 .state(memberTicket.getState())
+                .createdAt(memberTicket.getCreatedAt())
+                .updatedAt(memberTicket.getUpdatedAt())
                 .build();
     }
 
     public static MemberTicketResponseDto.MemberTicketDetailDto toDetailDto(MemberTicket memberTicket) {
-        return MemberTicketResponseDto.MemberTicketDetailDto.builder()
-                .memberTicketId(memberTicket.getId())
-                .memberId(memberTicket.getMember().getId())
-                .ticketId(memberTicket.getTicket().getId())
-                .useCount(memberTicket instanceof MemberMultiUseTicket ? ((MemberMultiUseTicket) memberTicket).getUseCount() : null)
-                .leftCount(memberTicket instanceof MemberMultiUseTicket ? ((MemberMultiUseTicket) memberTicket).getLeftCount() : null)
-                .startDate(memberTicket instanceof MemberSubscriptionTicket ? ((MemberSubscriptionTicket) memberTicket).getStartDate().toString() : null)
-                .expireDate(memberTicket instanceof MemberSubscriptionTicket ? ((MemberSubscriptionTicket) memberTicket).getExpireDate().toString() : null)
-                .state(memberTicket.getState())
-                .ticket(ticketConverter.toDetailDto(memberTicket.getTicket()))
-                .build();
+        final Ticket ticket = memberTicket.getTicket();
+        final Member member = memberTicket.getMember();
+        if (ticket.getTicketType() == TicketType.MULTI_USE) {
+            return MemberTicketResponseDto.MemberTicketDetailDto.builder()
+                    .memberTicketId(memberTicket.getId())
+                    .memberId(member.getId())
+                    .ticketId(ticket.getId())
+                    .ticket(TicketConverter.toDetailDto(ticket))
+                    .useCount(((MemberMultiUseTicket) memberTicket).getUseCount())
+                    .leftCount(((MemberMultiUseTicket) memberTicket).getLeftCount())
+                    .state(memberTicket.getState())
+                    .createdAt(memberTicket.getCreatedAt())
+                    .updatedAt(memberTicket.getUpdatedAt())
+                    .build();
+        } else if (ticket.getTicketType() == TicketType.SUBSCRIPTION) {
+            return MemberTicketResponseDto.MemberTicketDetailDto.builder()
+                    .memberTicketId(memberTicket.getId())
+                    .memberId(member.getId())
+                    .ticketId(ticket.getId())
+                    .ticket(TicketConverter.toDetailDto(ticket))
+                    .startDate(((MemberSubscriptionTicket) memberTicket).getStartDate())
+                    .expireDate(((MemberSubscriptionTicket) memberTicket).getExpireDate())
+                    .state(memberTicket.getState())
+                    .createdAt(memberTicket.getCreatedAt())
+                    .updatedAt(memberTicket.getUpdatedAt())
+                    .build();
+        } else {
+            throw new IllegalArgumentException(ErrorMessage.TICKET_TYPE_NOT_SUPPORTED.getMessage());
+        }
     }
 }

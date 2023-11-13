@@ -29,7 +29,8 @@ public class TicketResponseDto {
         private Integer useLimit;
         private Integer validDays;
         private TicketType ticketType;
-        private LocalDateTime createdAt;
         private Long storeId;
+        private LocalDateTime createdAt;
+        private LocalDateTime updatedAt;
     }
 }
